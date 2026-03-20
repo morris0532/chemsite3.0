@@ -116,7 +116,7 @@ export default function ProductDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Image */}
             <div className="bg-gray-50 rounded-2xl overflow-hidden aspect-[4/3]">
-              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+              <img src={product.image} alt={product.name} className="w-full h-full object-cover" loading="eager" />
             </div>
 
             {/* Info */}
@@ -274,7 +274,7 @@ export default function ProductDetailPage() {
                   className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1"
                 >
                   <div className="aspect-[4/3] bg-gray-50 overflow-hidden">
-                    <img src={rp.image} alt={rp.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  <img src={rp.image} alt={rp.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                   </div>
                   <div className="p-4">
                     <h3 className="text-sm font-semibold text-[#1A1A2E] group-hover:text-[#0066B3] transition-colors">{rp.name}</h3>

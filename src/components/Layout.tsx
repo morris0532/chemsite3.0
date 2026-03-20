@@ -24,11 +24,20 @@ export default function Layout({ children, title, description, jsonLd }: LayoutP
   const pageTitle = title ? `${title} | Sinochemi` : "Sinochemi - Global Chemical Supplier";
   const pageDescription = description || "Sinochemi is a leading B2B chemical supplier offering high-quality industrial chemicals including sodium thiosulphate, caustic soda, oxalic acid, and more. Global shipping from China.";
 
-  // Update document title
+  // Update document title and meta tags
   if (typeof document !== "undefined") {
     document.title = pageTitle;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", pageDescription);
+
+    // Update canonical link
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', `https://sinochemi.com${location.pathname}`);
   }
 
   const navLinks = [
@@ -83,10 +92,10 @@ export default function Layout({ children, title, description, jsonLd }: LayoutP
           </div>
           <div className="flex items-center gap-3">
             <span className="text-white/70">Follow us:</span>
-            <a href="#" aria-label="Facebook" className="hover:text-blue-300 transition-colors"><Facebook className="w-4 h-4" /></a>
-            <a href="#" aria-label="Twitter" className="hover:text-blue-300 transition-colors"><Twitter className="w-4 h-4" /></a>
-            <a href="#" aria-label="LinkedIn" className="hover:text-blue-300 transition-colors"><Linkedin className="w-4 h-4" /></a>
-            <a href="#" aria-label="Instagram" className="hover:text-blue-300 transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-blue-300 transition-colors"><Facebook className="w-4 h-4" /></a>
+            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="hover:text-blue-300 transition-colors"><Twitter className="w-4 h-4" /></a>
+            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-blue-300 transition-colors"><Linkedin className="w-4 h-4" /></a>
+            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-blue-300 transition-colors"><Instagram className="w-4 h-4" /></a>
           </div>
         </div>
       </div>
@@ -199,10 +208,10 @@ export default function Layout({ children, title, description, jsonLd }: LayoutP
                 Your trusted global chemical supplier. We provide high-quality industrial chemicals with competitive pricing and reliable shipping worldwide.
               </p>
               <div className="flex gap-3">
-                <a href="#" aria-label="Facebook" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-[#0066B3] transition-colors"><Facebook className="w-4 h-4" /></a>
-                <a href="#" aria-label="Twitter" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-[#0066B3] transition-colors"><Twitter className="w-4 h-4" /></a>
-                <a href="#" aria-label="LinkedIn" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-[#0066B3] transition-colors"><Linkedin className="w-4 h-4" /></a>
-                <a href="#" aria-label="Instagram" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-[#0066B3] transition-colors"><Instagram className="w-4 h-4" /></a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-[#0066B3] transition-colors"><Facebook className="w-4 h-4" /></a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-[#0066B3] transition-colors"><Twitter className="w-4 h-4" /></a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-[#0066B3] transition-colors"><Linkedin className="w-4 h-4" /></a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-[#0066B3] transition-colors"><Instagram className="w-4 h-4" /></a>
               </div>
             </div>
 
