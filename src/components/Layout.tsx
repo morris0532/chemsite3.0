@@ -151,7 +151,7 @@ export default function Layout({ children, title, description, jsonLd }: LayoutP
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <Link to="/en" className="flex items-center gap-2 flex-shrink-0">
+            <Link to={langPrefix} className="flex items-center gap-2 flex-shrink-0">
               <div className="w-10 h-10 bg-[#0066B3] rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">S</span>
               </div>
@@ -234,9 +234,9 @@ export default function Layout({ children, title, description, jsonLd }: LayoutP
                   {link.label}
                 </Link>
               ))}
-              <Link to="/en/contact" onClick={() => setMobileMenuOpen(false)}>
+              <Link to={`${langPrefix}/contact`} onClick={() => setMobileMenuOpen(false)}>
                 <Button className="w-full mt-2 bg-[#0066B3] hover:bg-[#004A82] text-white">
-                  Get a Quote
+                  {isRu ? "Запросить цену" : "Get a Quote"}
                 </Button>
               </Link>
             </nav>
