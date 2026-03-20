@@ -1,5 +1,5 @@
 import { useParams, Link, useLocation } from "react-router-dom";
-import { ChevronRight, FileText, Share2, Facebook, Twitter, Linkedin, Download, CheckCircle2, Info, Package, Truck, ShieldCheck } from "lucide-react";
+import { ChevronRight, FileText, Share2, Facebook, Twitter, Linkedin, Download, CheckCircle2, Info, Package, Truck, ShieldCheck, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -64,7 +64,7 @@ export default function ProductDetailPage() {
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: product.faqs.map((faq) => ({
+    mainEntity: (product.faqs || []).map((faq) => ({
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
@@ -299,7 +299,7 @@ export default function ProductDetailPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
-                    {product.specs.map((spec, i) => (
+                    {(product.specs || []).map((spec, i) => (
                       <tr key={i} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4 font-medium text-gray-900">{spec.label}</td>
                         <td className="px-6 py-4 text-gray-600">{spec.value}</td>
@@ -313,7 +313,7 @@ export default function ProductDetailPage() {
             <TabsContent value="applications" className="mt-0 focus-visible:outline-none">
               <div className="bg-white p-6 md:p-8 rounded-xl border border-gray-200 shadow-sm">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {product.applications.map((app, i) => (
+                  {(product.applications || []).map((app, i) => (
                     <div key={i} className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg border border-gray-100">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <CheckCircle2 className="w-4 h-4 text-[#0066B3]" />
@@ -336,7 +336,7 @@ export default function ProductDetailPage() {
             <p className="text-gray-600">{isRu ? "Найдите ответы на распространенные вопросы о" : "Find answers to common questions about"} {product.name}</p>
           </div>
           <Accordion type="single" collapsible className="w-full space-y-4">
-            {product.faqs.map((faq, i) => (
+            {(product.faqs || []).map((faq, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border border-gray-200 rounded-xl px-4 bg-white shadow-sm overflow-hidden">
                 <AccordionTrigger className="text-left font-semibold text-[#1A1A2E] hover:no-underline py-4">{faq.question}</AccordionTrigger>
                 <AccordionContent className="text-gray-600 pb-4 leading-relaxed">{faq.answer}</AccordionContent>
