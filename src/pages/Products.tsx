@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Grid3X3, List, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,10 +13,15 @@ export default function ProductsPage() {
   
   const currentProducts = isRu ? productsRu : products;
   const currentCategories = isRu ? productCategoriesRu : productCategories;
-  const defaultCategory = isRu ? "Все продукты" : "All Products";
+  const defaultCategory = isRu ? "Все" : "All Products";
 
   const [category, setCategory] = useState(defaultCategory);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
+  // Reset category when language changes to avoid "No products found"
+  useEffect(() => {
+    setCategory(defaultCategory);
+  }, [isRu, defaultCategory]);
 
   const filtered = useMemo(() => {
     return currentProducts.filter((p) => {
@@ -113,58 +118,58 @@ export default function ProductsPage() {
           </div>
 
           {/* Product Grid */}
-          {viewMode === "grid" ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filtered.map((product) => (
-                <Link
-                  key={product.id}
-                  to={`${langPrefix}/products/${product.slug}`}
-                  className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1"
-                >
-                  <div className="aspect-[4/3] bg-gray-50 overflow-hidden">
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-                  </div>
-                  <div className="p-4">
-                    <span className="text-xs font-medium text-[#0066B3] bg-blue-50 px-2 py-0.5 rounded-full">{product.category}</span>
-                    <h2 className="text-base font-semibold text-[#1A1A2E] mt-2 mb-1 group-hover:text-[#0066B3] transition-colors">{product.name}</h2>
-                    <p className="text-xs text-gray-500 mb-2">CAS: {product.cas}</p>
-                    <p className="text-sm text-gray-600 line-clamp-2">{product.shortDescription}</p>
-                    <div className="mt-3 flex items-center text-sm text-[#0066B3] font-medium">
-                      {content.viewDetails} <ArrowRight className="ml-1 w-3.5 h-3.5" />
+          {filtered.length > 0 ? (
+            viewMode === "grid" ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filtered.map((product) => (
+                  <Link
+                    key={product.id}
+                    to={`${langPrefix}/products/${product.slug}`}
+                    className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1"
+                  >
+                    <div className="aspect-[4/3] bg-gray-50 overflow-hidden">
+                      <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {filtered.map((product) => (
-                <Link
-                  key={product.id}
-                  to={`${langPrefix}/products/${product.slug}`}
-                  className="group flex gap-4 bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all p-4"
-                >
-                  <div className="w-32 h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="p-4">
                       <span className="text-xs font-medium text-[#0066B3] bg-blue-50 px-2 py-0.5 rounded-full">{product.category}</span>
-                      <span className="text-xs text-gray-500">CAS: {product.cas}</span>
+                      <h2 className="text-base font-semibold text-[#1A1A2E] mt-2 mb-1 group-hover:text-[#0066B3] transition-colors">{product.name}</h2>
+                      <p className="text-xs text-gray-500 mb-2">CAS: {product.cas}</p>
+                      <p className="text-sm text-gray-600 line-clamp-2">{product.shortDescription}</p>
+                      <div className="mt-3 flex items-center text-sm text-[#0066B3] font-medium">
+                        {content.viewDetails} <ArrowRight className="ml-1 w-3.5 h-3.5" />
+                      </div>
                     </div>
-                    <h2 className="text-base font-semibold text-[#1A1A2E] group-hover:text-[#0066B3] transition-colors">{product.name}</h2>
-                    <p className="text-sm text-gray-600 line-clamp-1 mt-1">{product.shortDescription}</p>
-                    <div className="flex gap-4 mt-2 text-xs text-gray-500">
-                      <span>{isRu ? "Порты" : "Ports"}: {product.ports}</span>
-                      <span>{isRu ? "Загрузка" : "Loading"}: {product.loading}</span>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filtered.map((product) => (
+                  <Link
+                    key={product.id}
+                    to={`${langPrefix}/products/${product.slug}`}
+                    className="group flex gap-4 bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all p-4"
+                  >
+                    <div className="w-32 h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
+                      <img src={product.image} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-
-          {filtered.length === 0 && (
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-medium text-[#0066B3] bg-blue-50 px-2 py-0.5 rounded-full">{product.category}</span>
+                        <span className="text-xs text-gray-500">CAS: {product.cas}</span>
+                      </div>
+                      <h2 className="text-base font-semibold text-[#1A1A2E] group-hover:text-[#0066B3] transition-colors">{product.name}</h2>
+                      <p className="text-sm text-gray-600 line-clamp-1 mt-1">{product.shortDescription}</p>
+                      <div className="flex gap-4 mt-2 text-xs text-gray-500">
+                        <span>{isRu ? "Порты" : "Ports"}: {product.ports}</span>
+                        <span>{isRu ? "Загрузка" : "Loading"}: {product.loading}</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )
+          ) : (
             <div className="text-center py-16">
               <p className="text-gray-500 text-lg">{content.noProducts}</p>
               <Button variant="outline" className="mt-4" onClick={() => { setCategory(defaultCategory); }}>
