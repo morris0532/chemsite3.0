@@ -137,5 +137,10 @@ export const blogPostsRu: BlogPost[] = [
   }
 ];
 
-export const getRecentBlogsRu = (limit: number = 3) => blogPostsRu.slice(0, limit);
-export const getBlogBySlugRu = (slug: string) => blogPostsRu.find((p) => p.slug === slug);
+export const getRecentBlogsRu = (count: number = 3) => {
+  return [...blogPostsRu]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, count);
+};
+
+export const getBlogBySlugRu = (slug: string) => blogPostsRu.find(p => p.slug === slug);
